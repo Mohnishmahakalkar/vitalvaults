@@ -6,11 +6,13 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
+import Loading from "./components/Loading";
 
 function App() {
   return (
     <AuthProvider>
       <Router>
+        <Loading />
         <Routes>
           <Route path="/" element={<Layout />}>
             {/* Protected Routes */}
