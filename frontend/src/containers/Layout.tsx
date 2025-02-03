@@ -8,7 +8,7 @@ const Layout = () => {
       <Navbar />
 
       {/* Main Content */}
-      <main className="flex-grow container mx-auto">
+      <main className="flex-grow container min-w-full">
         <Outlet />
       </main>
     </div>
