@@ -3,12 +3,12 @@ import Navbar from "../components/Navbar";
 
 const Layout = () => {
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* Navbar */}
-      <Navbar />
+    <div className="flex flex-col h-screen">
+      {/* Navbar takes 2/12 of the screen height */}
+      <Navbar className="h-[8%]" />
 
-      {/* Main Content */}
-      <main className="flex-grow container min-w-full">
+      {/* Main Content takes the remaining height */}
+      <main className="flex container min-w-full h-full">
         <Outlet />
       </main>
     </div>

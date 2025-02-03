@@ -10,26 +10,30 @@ interface NavItem {
   icon: JSX.Element;
 }
 
+interface NavbarProps {
+  className?: string; // Allow className prop
+}
+
 const loggedOutNavItems: NavItem[] = [
   { path: "/", label: "Home", icon: <FiHome /> },
   { path: "/about", label: "About", icon: <FiMenu /> },
   { path: "/contact", label: "Contact", icon: <FiMenu /> },
 ];
 
-const Navbar = () => {
+const Navbar: React.FC<NavbarProps> = ({ className }) => {
+  // Accept className
   const [isOpen, setIsOpen] = useState(false);
   const { isAuthenticated, login, logout } = useAuth();
 
-  let navItems: NavItem[] = isAuthenticated ? [] :loggedOutNavItems;
-
+  let navItems: NavItem[] = isAuthenticated ? [] : loggedOutNavItems;
 
   return (
-    <nav className="bg-blue-600 text-white shadow-md sticky top-0 z-50">
+    <nav
+      className={`${className} bg-blue-600 text-white shadow-md sticky top-0 z-50`}
+    >
+      {/* Apply className */}
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-        {/* Logo */}
         <h1 className="text-2xl font-bold">{AppName}</h1>
-
-        {/* Hamburger Icon for Mobile */}
         <button
           className="lg:hidden text-white text-2xl"
           onClick={() => setIsOpen(!isOpen)}
@@ -37,7 +41,6 @@ const Navbar = () => {
           {isOpen ? <FiX /> : <FiMenu />}
         </button>
 
-        {/* Desktop Menu */}
         <ul className="hidden lg:flex space-x-6">
           {navItems.map((item) => (
             <li key={item.path}>
@@ -69,8 +72,6 @@ const Navbar = () => {
           )}
         </div>
       </div>
-
-      {/* Mobile Overlay Menu */}
       <div
         className={`fixed inset-0 bg-blue-700 bg-opacity-95 transform ${
           isOpen ? "translate-y-0" : "-translate-y-full"
