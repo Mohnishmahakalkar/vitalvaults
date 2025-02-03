@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+import loadingSvg from "../assets/loading/loading.svg"
 
 const Loading = () => {
   const isLoading = useSelector((state: RootState) => state.loading.isLoading);
@@ -8,7 +9,7 @@ const Loading = () => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="animate-spin rounded-full h-16 w-16 border-4 border-white border-t-transparent"></div>
+     <img src={loadingSvg} alt="Loading..." className="h-40 w-40" />
     </div>
   );
 };
