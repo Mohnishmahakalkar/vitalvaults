@@ -17,15 +17,15 @@ const router = createBrowserRouter(
       children: [
         {
           path: "dashboard",
-          element: <ProtectedRoute />, // ✅ Protected Route Wrapper
+          element: <ProtectedRoute />, 
           children: [{ path: "", element: <About /> }],
         },
-        { index: true, element: <Home /> }, // Public Route
+        { index: true, element: <Home /> }, 
         { path: "about", element: <About /> },
         { path: "contact", element: <Contact /> },
         { path: "login", element: <Login /> },
         { path: "404", element: <NotFound /> },
-        { path: "*", element: <NotFound /> }, // Splat route for 404
+        { path: "*", element: <NotFound /> },
       ],
     },
   ],

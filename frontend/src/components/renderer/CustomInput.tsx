@@ -19,7 +19,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
   rules,
 }) => (
   <div>
-    <label className="block text-sm font-medium mb-1">{label}</label>
+    <label className="block text-base font-semibold mb-1">{label}</label>
     <Controller
       name={name}
       control={control}
@@ -32,12 +32,12 @@ const CustomInput: React.FC<CustomInputProps> = ({
             type={type}
             placeholder={placeholder}
             className={`w-full border px-3 py-2 rounded-md mt-1 focus:outline-none ${
-                error ? 'border-red-500' : 'border-gray-300 focus:ring-1 focus:ring-blue-500'
-              }`}
+              error ? "border-red-500" : "border-gray-300 focus:border-blue-500"
+            }`}
             value={field.value || ""}
           />
           {error && (
-              <p className="text-red-500 text-sm mt-1">{` ${error.message}`}</p>
+            <p className="text-red-500 text-sm mt-1">{` ${error.message}`}</p>
           )}
         </div>
       )}
