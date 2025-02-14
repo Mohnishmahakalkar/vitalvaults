@@ -3,6 +3,9 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { CustomSelect, Option } from "../components/renderer/CustomSelect";
 import CustomInput from "../components/renderer/CustomInput";
+import CustomButton from "../components/renderer/CustomButton";
+import bgImage from "../assets/background-images/login-bg.jpg";
+import { AppName } from "../utils/constants/AppConfigs";
 
 interface LoginFormData {
   role: Option | null;
@@ -25,12 +28,19 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-grow bg-gray-100">
+    <div className="flex flex-grow">
       <ToastContainer />
-      <div className="flex-grow flex items-center justify-center bg-gray-100">
-        <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
-          <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <div
+        className="flex-grow flex items-center justify-center bg-no-repeat bg-cover bg-center relative"
+        style={{ backgroundImage: `url(${bgImage})` }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-primary opacity-60"></div>{" "}
+        {/* Gradient overlay */}
+        <div className="bg-white p-10 rounded-3xl shadow-xl w-full max-w-md z-10 m-4">
+          <h2 className="text-4xl font-extrabold text-primary text-center mb-6">
+            {AppName}
+          </h2>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <CustomSelect
               label="Role"
               name="role"
@@ -59,12 +69,12 @@ const LoginPage: React.FC = () => {
                 },
               }}
             />
-            <button
-              type="submit"
-              className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
-            >
-              Login
-            </button>
+            <CustomButton
+              label="Login"
+              type="normal"
+              isSubmit
+              className="w-full rounded-full "
+            />
           </form>
         </div>
       </div>

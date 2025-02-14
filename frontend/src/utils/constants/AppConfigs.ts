@@ -1,1 +1,1 @@
-export const AppName = "My App"
+export const AppName = "VitalVaults"

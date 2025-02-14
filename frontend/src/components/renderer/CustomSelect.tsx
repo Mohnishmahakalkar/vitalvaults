@@ -23,7 +23,7 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({
   rules,
 }) => (
   <div>
-    <label className="block text-sm font-medium mb-1">{label}</label>
+    <label className="block text-base font-semibold mb-1">{label}</label>
     <Controller
       name={name}
       control={control}
@@ -40,20 +40,20 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({
             value={field.value || null}
             onChange={(selected) => field.onChange(selected)}
             styles={{
-                control: (base, state) => ({
-                  ...base,
-                  borderColor: error
-                    ? "red" // ✅ Red border when error exists
-                    : state.isFocused
-                    ? "#3b82f6" // Blue border when focused without error
-                    : "#d1d5db", // Default gray border
-  
-                  boxShadow: "none", // ✅ No box shadow in any state
-                  "&:hover": {
-                    borderColor: error ? "red" : "#3b82f6", // Red on hover if error
-                  },
-                }),
-              }}
+              control: (base, state) => ({
+                ...base,
+                borderColor: error
+                  ? "red"
+                  : state.isFocused
+                  ? "#3b82f6"
+                  : "#d1d5db",
+
+                boxShadow: "none",
+                "&:hover": {
+                  borderColor: error ? "red" : "#3b82f6",
+                },
+              }),
+            }}
           />
           {error && (
             <p className="text-red-500 text-sm mt-1">{` ${error.message}`}</p>
