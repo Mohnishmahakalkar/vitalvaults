@@ -5,7 +5,7 @@ interface CustomInputProps {
   label: string;
   name: string;
   control: any;
-  type?: string;
+  type?: string; // Can be "text", "email", "password", or "textarea"
   placeholder: string;
   rules?: object;
 }
@@ -27,17 +27,32 @@ const CustomInput: React.FC<CustomInputProps> = ({
       defaultValue=""
       render={({ field, fieldState: { error } }) => (
         <div>
-          <input
-            {...field}
-            type={type}
-            placeholder={placeholder}
-            className={`w-full border px-3 py-2 rounded-md mt-1 focus:outline-none ${
-              error ? "border-red-500" : "border-gray-300 focus:border-blue-500"
-            }`}
-            value={field.value || ""}
-          />
+          {type === "textarea" ? (
+            <textarea
+              {...field}
+              placeholder={placeholder}
+              className={`w-full border px-3 py-2 rounded-md mt-1 focus:outline-none resize-none ${
+                error
+                  ? "border-red-500"
+                  : "border-gray-300 focus:border-blue-500"
+              }`}
+              rows={4}
+            />
+          ) : (
+            <input
+              {...field}
+              type={type}
+              placeholder={placeholder}
+              className={`w-full border px-3 py-2 rounded-md mt-1 focus:outline-none ${
+                error
+                  ? "border-red-500"
+                  : "border-gray-300 focus:border-blue-500"
+              }`}
+              value={field.value || ""}
+            />
+          )}
           {error && (
-            <p className="text-red-500 text-sm mt-1">{` ${error.message}`}</p>
+            <p className="text-red-500 text-sm mt-1">{error.message}</p>
           )}
         </div>
       )}

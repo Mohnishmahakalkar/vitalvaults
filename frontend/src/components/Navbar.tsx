@@ -1,9 +1,16 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { FiMenu, FiX, FiHome, FiInfo, FiMail } from "react-icons/fi";
+import { Link } from "react-router-dom";
+import {
+  FiMenu,
+  FiX,
+  FiHome,
+  FiInfo,
+  FiMail,
+  FiLogIn,
+  FiUserPlus,
+} from "react-icons/fi";
 import { useAuth } from "../context/AuthContext";
 import { AppName } from "../utils/constants/AppConfigs";
-import CustomButton from "./renderer/CustomButton";
 import NavItem from "./NavItem";
 
 interface NavItem {
@@ -13,20 +20,20 @@ interface NavItem {
 }
 
 interface NavbarProps {
-  className?: string; // Allow className prop
+  className?: string;
 }
 
 const loggedOutNavItems: NavItem[] = [
   { path: "/", label: "Home", icon: <FiHome /> },
   { path: "/about", label: "About", icon: <FiInfo /> },
   { path: "/contact", label: "Contact-Us", icon: <FiMail /> },
+  { path: "/login", label: "Login", icon: <FiLogIn /> },
+  { path: "/sign-up", label: "Sign Up", icon: <FiUserPlus /> },
 ];
 
 const Navbar: React.FC<NavbarProps> = ({ className }) => {
-  // Accept className
   const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated } = useAuth();
 
   let navItems: NavItem[] = isAuthenticated ? [] : loggedOutNavItems;
   return (
@@ -52,24 +59,6 @@ const Navbar: React.FC<NavbarProps> = ({ className }) => {
             />
           ))}
         </ul>
-
-        <div>
-          {isAuthenticated ? (
-            <CustomButton
-              label="Logout"
-              type="danger"
-              onClick={logout}
-              className="ml-4"
-            />
-          ) : (
-            <CustomButton
-              label="Login"
-              type="normal"
-              onClick={() => navigate("/login")}
-              className="ml-4"
-            />
-          )}
-        </div>
       </div>
       <div
         className={`fixed inset-0 bg-secondary bg-opacity-95 transform ${
