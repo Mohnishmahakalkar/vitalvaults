@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   FiMenu,
   FiX,
@@ -34,6 +34,7 @@ const loggedOutNavItems: NavItem[] = [
 const Navbar: React.FC<NavbarProps> = ({ className }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { isAuthenticated } = useAuth();
+  const location = useLocation();
 
   let navItems: NavItem[] = isAuthenticated ? [] : loggedOutNavItems;
   return (
@@ -73,17 +74,23 @@ const Navbar: React.FC<NavbarProps> = ({ className }) => {
         </button>
 
         <ul className="flex flex-col items-center justify-center h-full space-y-6">
-          {navItems.map((item) => (
-            <li key={item.path}>
-              <Link
-                to={item.path}
-                className="flex items-center gap-2 text-2xl text-white hover:underline"
-                onClick={() => setIsOpen(false)}
-              >
-                {item.icon} {item.label}
-              </Link>
-            </li>
-          ))}
+          {navItems
+            .filter(
+              (item) =>
+                !(location.pathname === "/login" && item.label === "Login") &&
+                !(location.pathname === "/sign-up" && item.label === "Sign Up")
+            )
+            .map((item) => (
+              <li key={item.path}>
+                <Link
+                  to={item.path}
+                  className="flex items-center gap-2 text-2xl text-white hover:underline"
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item.icon} {item.label}
+                </Link>
+              </li>
+            ))}
         </ul>
       </div>
     </nav>

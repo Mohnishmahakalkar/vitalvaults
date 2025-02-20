@@ -17,7 +17,7 @@ const Home = () => {
 
   if (isLoading) return null;
 
-  return <div className="flex flex-col w-full">home page</div>;
+  return  <h2 className="text-center text-3xl mt-10">Home Page</h2>;;
 };
 
 export default Home;
