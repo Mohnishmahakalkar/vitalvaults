@@ -11,6 +11,7 @@ export interface FieldConfig {
   label: string;
   type:
     | "text"
+    | "phone"
     | "password"
     | "email"
     | "number"
@@ -29,22 +30,41 @@ export interface FieldConfig {
   fileUrl?: string;
 }
 
+interface ButtonConfig {
+  showSubmit?: boolean;
+  showCancel?: boolean;
+  showReset?: boolean;
+  onCancel?: () => void;
+}
+
 interface DynamicFormProps {
   fields: FieldConfig[];
   onSubmit: SubmitHandler<any>;
+  layout?: "row" | "column";
+  buttonsConfig?: ButtonConfig;
 }
 
-const DynamicForm: React.FC<DynamicFormProps> = ({ fields, onSubmit }) => {
-  const { handleSubmit, control } = useForm();
+const DynamicForm: React.FC<DynamicFormProps> = ({
+  fields,
+  onSubmit,
+  layout = "column",
+  buttonsConfig = { showSubmit: true, showCancel: false, showReset: false },
+}) => {
+  const { handleSubmit, control, reset } = useForm();
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className={`flex w-full gap-4 ${
+        layout === "row" ? "flex-row flex-wrap" : "flex-col"
+      }`}
+    >
       {fields.map((field) => (
-        <div key={field.name}>
+        <div key={field.name} className="max-w-md w-full">
           <Controller
             name={field.name}
             control={control}
-            render={({}) => {
+            render={() => {
               switch (field.type) {
                 case "text":
                 case "password":
@@ -52,6 +72,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ fields, onSubmit }) => {
                 case "number":
                 case "date":
                 case "textarea":
+                case "phone":
                   return (
                     <CustomInput
                       control={control}
@@ -103,6 +124,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ fields, onSubmit }) => {
                       label={field.label}
                       name={field.name}
                       control={control}
+                      options={field.options || []}
                       rules={{
                         required: field.required
                           ? `${field.label} is required*`
@@ -160,12 +182,33 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ fields, onSubmit }) => {
         </div>
       ))}
 
-      <CustomButton
-        label="Submit"
-        type="normal"
-        isSubmit
-        className="w-full rounded-full"
-      />
+      {/* Button Section */}
+      <div className="flex flex-row w-full gap-4 mt-10 justify-center">
+        {buttonsConfig.showSubmit && (
+          <CustomButton
+            label="Submit"
+            type="normal"
+            isSubmit
+            className="max-w-xs w-full"
+          />
+        )}
+        {buttonsConfig.showReset && (
+          <CustomButton
+            label="Reset"
+            type="reset"
+            onClick={() => reset()}
+            className="max-w-xs w-full"
+          />
+        )}
+        {buttonsConfig.showCancel && buttonsConfig.onCancel && (
+          <CustomButton
+            label="Cancel"
+            type="danger"
+            onClick={buttonsConfig.onCancel}
+            className="max-w-xs w-full"
+          />
+        )}
+      </div>
     </form>
   );
 };

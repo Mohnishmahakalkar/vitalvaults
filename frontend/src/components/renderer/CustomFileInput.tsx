@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Controller } from "react-hook-form";
-import { FaUpload, FaTrash, FaDownload } from "react-icons/fa";
+import { FaUpload, FaFile, FaDownload } from "react-icons/fa";
+import { CgClose } from "react-icons/cg";
+import DynamicText from "../DynamicText";
 
 interface CustomFileInputProps {
   label: string;
@@ -27,10 +29,18 @@ const CustomFileInput: React.FC<CustomFileInputProps> = ({
       control={control}
       rules={rules}
       render={({ field: { onChange, ref }, fieldState: { error } }) => (
-        <div>
-          <label className="block text-base font-semibold mb-1">{label}</label>
+        <div className="w-full">
+          {/* Label */}
+
+          <label className="block font-semibold mb-2 text-black">{label}</label>
+
+          {/* Upload Mode */}
           {mode === "upload" ? (
-            <div className="flex items-center gap-2 border p-2 rounded-md w-full">
+            <label
+              htmlFor={`file-upload-${name}`}
+              className="flex items-center justify-between border border-primary p-2 rounded-lg w-full bg-white shadow-sm cursor-pointer hover:border-primary-dark transition"
+            >
+              {/* Hidden File Input */}
               <input
                 type="file"
                 ref={ref}
@@ -42,42 +52,64 @@ const CustomFileInput: React.FC<CustomFileInputProps> = ({
                 className="hidden"
                 id={`file-upload-${name}`}
               />
-              <label
-                htmlFor={`file-upload-${name}`}
-                className="flex items-center gap-2 cursor-pointer text-blue-600"
-              >
-                <FaUpload />{" "}
-                {selectedFile ? selectedFile.name : "Choose a file"}
-              </label>
+
+              {/* Icon - Left (Changes based on file selection) */}
+              {selectedFile ? (
+                <FaFile className="text-primary text-lg" />
+              ) : (
+                <FaUpload className="text-primary text-lg" />
+              )}
+
+              {/* File Name or Select File - Center */}
+              <DynamicText
+                text={selectedFile ? selectedFile.name : "Select a file"}
+                className="text-primary font-semibold flex-1 text-center"
+              />
+
+              {/* Remove File Button (X) - Right */}
               {selectedFile && (
                 <button
                   type="button"
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.stopPropagation();
                     setSelectedFile(null);
                     onChange(null);
                   }}
-                  className="text-red-500"
+                  className="text-red-500 hover:text-red-600 transition"
                 >
-                  <FaTrash />
+                  <CgClose  />
                 </button>
               )}
-            </div>
+            </label>
           ) : (
-            <div className="flex items-center gap-2 border p-2 rounded-md w-full">
+            // Download Mode
+            <div className="flex items-center border border-primary p-2 rounded-lg w-full bg-white shadow-sm">
+              {/* Icon - Left */}
+              <FaDownload className="text-primary text-lg mr-2" />
+
+              {/* File Name - Center */}
               {fileUrl ? (
                 <a
                   href={fileUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-600 flex items-center gap-2"
+                  className="flex w-full"
                 >
-                  <FaDownload /> Download File
+                  <DynamicText
+                    text={"Download File"}
+                    className="text-primary flex-1 text-center font-semibold"
+                  />
                 </a>
               ) : (
-                <span className="text-gray-500">No file available</span>
+                <DynamicText
+                  text={"No file available"}
+                  className="text-gray-500 flex-1 text-center"
+                />
               )}
             </div>
           )}
+
+          {/* Error Message */}
           {error && (
             <p className="text-red-500 text-sm mt-1">{error.message}</p>
           )}

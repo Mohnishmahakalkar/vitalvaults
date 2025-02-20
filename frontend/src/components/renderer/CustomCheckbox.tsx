@@ -1,10 +1,17 @@
 import React from "react";
 import { Controller } from "react-hook-form";
+import DynamicText from "../DynamicText";
+
+interface Option {
+  label: string;
+  value: string | number;
+}
 
 interface CustomCheckboxProps {
-  label: string;
+  label?: string;
   name: string;
   control: any;
+  options?: Option[]; // Supports multiple checkboxes
   rules?: object;
 }
 
@@ -12,32 +19,62 @@ const CustomCheckbox: React.FC<CustomCheckboxProps> = ({
   label,
   name,
   control,
+  options = [], // Default to empty array
   rules,
-}) => (
-  <Controller
-    name={name}
-    control={control}
-    rules={rules}
-    render={({
-      field: { value, onChange, onBlur, ref },
-      fieldState: { error },
-    }) => (
-      <div>
-        <label className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            ref={ref}
-            checked={!!value}
-            onChange={(e) => onChange(e.target.checked)}
-            onBlur={onBlur}
-            className="w-4 h-4 border-gray-300 rounded focus:ring focus:ring-blue-500"
-          />
-          {label}
-        </label>
-        {error && <p className="text-red-500 text-sm mt-1">{error.message}</p>}
-      </div>
-    )}
-  />
-);
+}) => {
+  return (
+    <Controller
+      name={name}
+      control={control}
+      rules={rules}
+      defaultValue={[]} // ✅ Ensure value is always an array
+      render={({
+        field: { value = [], onChange, onBlur, ref },
+        fieldState: { error },
+      }) => {
+        const currentValue = Array.isArray(value) ? value : []; // ✅ Ensure it's an array
+
+        const handleCheckboxChange = (checkedValue: string | number) => {
+          const newValue = currentValue.includes(checkedValue)
+            ? currentValue.filter((v) => v !== checkedValue)
+            : [...currentValue, checkedValue];
+
+          onChange(newValue);
+        };
+
+        return (
+          <div>
+            {label && <DynamicText text={label} className="font-bold" />}
+            <div className="flex flex-col gap-2 mt-2">
+              {options.length > 0 ? (
+                options.map((option) => (
+                  <label key={option.value} className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      ref={ref}
+                      checked={currentValue.includes(option.value)}
+                      onChange={() => handleCheckboxChange(option.value)}
+                      onBlur={onBlur}
+                      className="w-4 h-4 border-gray-300 rounded"
+                    />
+                    <DynamicText
+                      text={option.label}
+                      className="font-semibold"
+                    />
+                  </label>
+                ))
+              ) : (
+                <p className="text-gray-500">No options available</p> // Debug message
+              )}
+            </div>
+            {error && (
+              <p className="text-red-500 text-sm mt-1">{error.message}</p>
+            )}
+          </div>
+        );
+      }}
+    />
+  );
+};
 
 export default CustomCheckbox;

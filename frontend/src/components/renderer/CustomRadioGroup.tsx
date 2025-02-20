@@ -1,5 +1,6 @@
 import React from "react";
 import { Controller } from "react-hook-form";
+import DynamicText from "../DynamicText";
 
 interface RadioOption {
   label: string;
@@ -30,8 +31,9 @@ const CustomRadioGroup: React.FC<CustomRadioGroupProps> = ({
       fieldState: { error },
     }) => (
       <div>
-        <label className="block font-semibold">{label}</label>
-        <div className="flex gap-4">
+        <DynamicText text={label} className="font-semibold" />
+
+        <div className="flex gap-4 mt-2">
           {options.map((option) => (
             <label key={option.value} className="flex items-center gap-2">
               <input
@@ -41,9 +43,12 @@ const CustomRadioGroup: React.FC<CustomRadioGroupProps> = ({
                 checked={value === option.value}
                 onChange={() => onChange(option.value)}
                 onBlur={onBlur}
-                className="w-4 h-4 border-gray-300 focus:ring focus:ring-blue-500"
+                className="w-4 h-4 border-gray-300"
               />
-              {option.label}
+              <DynamicText
+                text={option.label}
+                className="font-semibold block"
+              />
             </label>
           ))}
         </div>

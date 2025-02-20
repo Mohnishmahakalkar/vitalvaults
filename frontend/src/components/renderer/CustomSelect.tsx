@@ -1,6 +1,7 @@
 import React from "react";
 import { Controller, Control } from "react-hook-form";
 import Select from "react-select";
+import DynamicText from "../DynamicText";
 
 export interface Option {
   value: string;
@@ -10,7 +11,7 @@ export interface Option {
 export interface CustomSelectProps {
   label: string;
   name: string;
-  control: Control<any>; // Properly typed for react-hook-form
+  control: Control<any>;
   options: Option[];
   rules?: object;
 }
@@ -22,23 +23,25 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({
   options,
   rules,
 }) => (
-  <div>
-    <label className="block text-base font-semibold mb-1">{label}</label>
+  <div className="w-full">
+    {/* Label */}
+    <DynamicText text={label} className="font-semibold" />
+
     <Controller
       name={name}
       control={control}
       rules={rules}
-      defaultValue={undefined} // Use undefined instead of null
+      defaultValue={undefined}
       render={({ field, fieldState: { error } }) => (
         <div>
+          {/* Custom Select Component */}
           <Select
             {...field}
             options={options}
-            placeholder={`Select ${name}`}
+            placeholder={`Select ${label}`}
             isSearchable
-            className="mt-1"
-            value={field.value ?? null} // Ensures controlled behavior
-            onChange={(selected) => field.onChange(selected || null)} // Prevents undefined issues
+            value={field.value ?? null}
+            onChange={(selected) => field.onChange(selected || null)}
             styles={{
               control: (base, state) => ({
                 ...base,
@@ -47,15 +50,23 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({
                   : state.isFocused
                   ? "#3b82f6"
                   : "#d1d5db",
-
-                boxShadow: "none",
+                boxShadow: state.isFocused
+                  ? "0 0 0 1px rgba(59,130,246,0.5)"
+                  : "none",
                 "&:hover": {
                   borderColor: error ? "red" : "#3b82f6",
                 },
+                padding: "3px",
+                borderRadius: "8px",
               }),
             }}
+            className="mt-2 w-full"
           />
-          {error && <p className="text-red-500 text-sm mt-1">{error.message}</p>}
+
+          {/* Error Message */}
+          {error && (
+            <p className="text-red-500 text-sm mt-1">{error.message}</p>
+          )}
         </div>
       )}
     />

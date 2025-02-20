@@ -42,14 +42,15 @@ const Navbar: React.FC<NavbarProps> = ({ className }) => {
       className={`${className} bg-white text-primary text-lg shadow-md sticky top-0 z-30`}
     >
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-        <h1 className="text-2xl font-bold">{AppName}</h1>
+        <h1 className="text-2xl font-bold">
+          <Link to="/login">{AppName}</Link>
+        </h1>
         <button
           className="lg:hidden text-primary text-2xl"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <FiX /> : <FiMenu />}
         </button>
-
         <ul className="hidden lg:flex space-x-6">
           {navItems.map((item) => (
             <NavItem

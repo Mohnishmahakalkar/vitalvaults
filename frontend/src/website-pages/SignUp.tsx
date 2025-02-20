@@ -6,7 +6,13 @@ import { AppName } from "../utils/constants/AppConfigs";
 
 const signupFields: FieldConfig[] = [
   { type: "text", name: "fullName", label: "Full Name", required: true },
-  { type: "number", name: "phone", label: "Phone Number", required: true },
+  {
+    type: "phone",
+    name: "phoneNumber",
+    label: "Mobile Number",
+    required: true,
+    minLength: 10,
+  },
   { type: "date", name: "dob", label: "Date of Birth", required: true },
   {
     type: "radio",
@@ -42,7 +48,7 @@ const SignupPage: React.FC = () => {
 
   return (
     <div className="flex justify-center items-center w-full h-full">
-      <ToastContainer />
+      <ToastContainer position="bottom-right" />
 
       {/* Signup Form Container */}
       <div className="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-lg z-10 relative mx-2">
