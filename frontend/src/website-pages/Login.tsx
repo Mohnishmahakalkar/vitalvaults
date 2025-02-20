@@ -8,7 +8,7 @@ import { Option } from "../components/renderer/CustomSelect";
 const roleOptions: Option[] = [
   { value: "hospital", label: "Hospital" },
   { value: "doctor", label: "Doctor" },
-  { value: "attendent", label: "Attendant" },
+  { value: "attendant", label: "Attendant" },
 ];
 
 const loginFields: FieldConfig[] = [
@@ -36,17 +36,17 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-grow">
+    <div className="flex justify-center items-center w-full h-full">
       <ToastContainer />
-      <div
-        className="flex-grow flex items-center justify-center bg-no-repeat bg-cover bg-center relative"
-        style={{ backgroundImage: `url(${bgImage})` }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-primary opacity-60"></div>
-        <div className="bg-white p-10 rounded-3xl shadow-xl w-full max-w-md z-10 m-4">
-          <h2 className="text-4xl font-extrabold text-primary text-center mb-6">
-            {AppName}
-          </h2>
+
+      {/* Signup Form Container */}
+      <div className="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-lg z-10 relative mx-2">
+        <h2 className="text-4xl font-extrabold text-primary text-center mb-6">
+          {AppName}
+        </h2>
+
+        {/* Scrollable Form */}
+        <div className="max-h-[70vh] overflow-y-auto scrollbar-thin">
           <DynamicForm fields={loginFields} onSubmit={handleLogin} />
         </div>
       </div>

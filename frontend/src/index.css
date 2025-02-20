@@ -5,3 +5,20 @@
 body {
   @apply font-overlock;
 }
+
+::-webkit-scrollbar {
+  width: 6px; /* Slim width */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* No background */
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.3); /* Subtle color */
+  border-radius: 10px; /* Rounded edges */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.5); /* Slightly darker on hover */
+}
