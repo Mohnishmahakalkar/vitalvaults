@@ -3,6 +3,8 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DynamicForm, { FieldConfig } from "../components/renderer/DynamicForm";
 import { AppName } from "../utils/constants/AppConfigs";
+import PageWrapper from "../containers/PageWrapper";
+import bgImage from "../assets/background-images/default-bg.jpg";
 
 const signupFields: FieldConfig[] = [
   { type: "text", name: "fullName", label: "Full Name", required: true },
@@ -47,21 +49,19 @@ const SignupPage: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-center items-center w-full h-full">
+    <PageWrapper backgroundImage={bgImage}>
       <ToastContainer position="bottom-right" />
-
-      {/* Signup Form Container */}
-      <div className="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-lg z-10 relative mx-2">
+      <div className="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-fit md:max-w-lg h-fit mx-2">
         <h2 className="text-4xl font-extrabold text-primary text-center mb-6">
           {AppName}
         </h2>
-
-        {/* Scrollable Form */}
-        <div className="max-h-[70vh] overflow-y-auto scrollbar-thin p-2">
-          <DynamicForm fields={signupFields} onSubmit={handleSignup} />
-        </div>
+        <DynamicForm
+          fields={signupFields}
+          onSubmit={handleSignup}
+          layout="row"
+        />
       </div>
-    </div>
+    </PageWrapper>
   );
 };
 

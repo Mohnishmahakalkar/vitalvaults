@@ -35,7 +35,10 @@ const CustomRadioGroup: React.FC<CustomRadioGroupProps> = ({
 
         <div className="flex gap-4 mt-2">
           {options.map((option) => (
-            <label key={option.value} className="flex items-center gap-2">
+            <label
+              key={option.value}
+              className="flex items-center gap-2 cursor-pointer"
+            >
               <input
                 type="radio"
                 ref={ref}
@@ -43,11 +46,11 @@ const CustomRadioGroup: React.FC<CustomRadioGroupProps> = ({
                 checked={value === option.value}
                 onChange={() => onChange(option.value)}
                 onBlur={onBlur}
-                className="w-4 h-4 border-gray-300"
+                className="w-4 h-4 border-gray-300 transition accent-primary" // ✅ Makes the selected radio primary
               />
               <DynamicText
                 text={option.label}
-                className="font-semibold block"
+                className="font-semibold text-black"
               />
             </label>
           ))}
