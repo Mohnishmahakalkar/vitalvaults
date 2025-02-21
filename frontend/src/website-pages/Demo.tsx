@@ -106,7 +106,7 @@ const Demo = () => {
       <div className="flex flex-row p-2 bg-white w-full">
         <DynamicForm
           fields={fields}
-          onSubmit={() => {}}
+          onSubmit={(data) => {console.log(data,"debug:bchdsbjcd")}}
           layout="row"
           buttonsConfig={{
             showSubmit: true,

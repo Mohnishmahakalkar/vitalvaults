@@ -1,11 +1,11 @@
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoading } from "../redux/loadingSlice";
 import { RootState } from "../redux/store";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AppName } from "../utils/constants/AppConfigs";
 import DynamicForm, { FieldConfig } from "../components/renderer/DynamicForm";
+import PageWrapper from "../containers/PageWrapper";
+import bgImage from "../assets/background-images/default-bg.jpg";
 
 const loginFields: FieldConfig[] = [
   {
@@ -38,22 +38,18 @@ const LoginPage: React.FC = () => {
   if (isLoading) return null;
 
   return (
-    <div className="flex justify-center items-center w-full h-full">
+    <PageWrapper backgroundImage={bgImage}>
       <ToastContainer position="bottom-right" />
+      <div className="flex flex-1 items-center justify-center w-full h-full">
+        <div className="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-lg mx-2">
+          <h2 className="text-4xl font-extrabold text-primary text-center mb-6">
+            {AppName}
+          </h2>
 
-      {/* Loading Spinner */}
-
-      <div className="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-lg z-10 relative mx-2">
-        <h2 className="text-4xl font-extrabold text-primary text-center mb-6">
-          {AppName}
-        </h2>
-
-        {/* Scrollable Form */}
-        <div className="max-h-[70vh] overflow-y-auto scrollbar-thin">
           <DynamicForm fields={loginFields} onSubmit={handleLogin} />
         </div>
       </div>
-    </div>
+    </PageWrapper>
   );
 };
 

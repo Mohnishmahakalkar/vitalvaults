@@ -11,7 +11,7 @@ interface CustomCheckboxProps {
   label?: string;
   name: string;
   control: any;
-  options?: Option[]; // Supports multiple checkboxes
+  options?: Option[];
   rules?: object;
 }
 
@@ -19,7 +19,7 @@ const CustomCheckbox: React.FC<CustomCheckboxProps> = ({
   label,
   name,
   control,
-  options = [], // Default to empty array
+  options = [],
   rules,
 }) => {
   return (
@@ -27,12 +27,12 @@ const CustomCheckbox: React.FC<CustomCheckboxProps> = ({
       name={name}
       control={control}
       rules={rules}
-      defaultValue={[]} // ✅ Ensure value is always an array
+      defaultValue={[]} // Ensure value is always an array
       render={({
         field: { value = [], onChange, onBlur, ref },
         fieldState: { error },
       }) => {
-        const currentValue = Array.isArray(value) ? value : []; // ✅ Ensure it's an array
+        const currentValue = Array.isArray(value) ? value : [];
 
         const handleCheckboxChange = (checkedValue: string | number) => {
           const newValue = currentValue.includes(checkedValue)
@@ -47,24 +47,29 @@ const CustomCheckbox: React.FC<CustomCheckboxProps> = ({
             {label && <DynamicText text={label} className="font-bold" />}
             <div className="flex flex-col gap-2 mt-2">
               {options.length > 0 ? (
-                options.map((option) => (
-                  <label key={option.value} className="flex items-center gap-2">
-                    <input
-                      type="checkbox"
-                      ref={ref}
-                      checked={currentValue.includes(option.value)}
-                      onChange={() => handleCheckboxChange(option.value)}
-                      onBlur={onBlur}
-                      className="w-4 h-4 border-gray-300 rounded"
-                    />
-                    <DynamicText
-                      text={option.label}
-                      className="font-semibold"
-                    />
-                  </label>
-                ))
+                options.map((option) => {
+                  return (
+                    <label
+                      key={option.value}
+                      className="flex items-center gap-2 cursor-pointer"
+                    >
+                      <input
+                        type="checkbox"
+                        ref={ref}
+                        checked={currentValue.includes(option.value)}
+                        onChange={() => handleCheckboxChange(option.value)}
+                        onBlur={onBlur}
+                        className="w-4 h-4 border-gray-300 rounded transition accent-primary" // ✅ Checkbox will be primary when selected
+                      />
+                      <DynamicText
+                        text={option.label}
+                        className="font-semibold text-black"
+                      />
+                    </label>
+                  );
+                })
               ) : (
-                <p className="text-gray-500">No options available</p> // Debug message
+                <p className="text-gray-500">No options available</p>
               )}
             </div>
             {error && (

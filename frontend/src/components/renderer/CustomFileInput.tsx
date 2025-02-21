@@ -77,7 +77,7 @@ const CustomFileInput: React.FC<CustomFileInputProps> = ({
                   }}
                   className="text-red-500 hover:text-red-600 transition"
                 >
-                  <CgClose  />
+                  <CgClose />
                 </button>
               )}
             </label>
