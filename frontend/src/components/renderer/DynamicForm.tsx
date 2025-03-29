@@ -40,7 +40,7 @@ interface ButtonConfig {
 interface DynamicFormProps {
   fields: FieldConfig[];
   onSubmit: SubmitHandler<any>;
-  layout?: "row" | "column";
+  layout?: "row" | "column" | "wrap";
   buttonsConfig?: ButtonConfig;
 }
 
@@ -56,7 +56,11 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
     <form onSubmit={handleSubmit(onSubmit)}>
       <div
         className={`flex w-full gap-4 ${
-          layout === "row" ? "flex-row flex-wrap" : "flex-col"
+          layout === "row"
+            ? "flex-row"
+            : layout === "wrap"
+            ? "flex-wrap"
+            : "flex-col"
         }`}
       >
         {fields.map((field) => (

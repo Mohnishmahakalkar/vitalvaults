@@ -6,20 +6,22 @@ import { AppName } from "../utils/constants/AppConfigs";
 import DynamicForm, { FieldConfig } from "../components/renderer/DynamicForm";
 import PageWrapper from "../containers/PageWrapper";
 import bgImage from "../assets/background-images/default-bg.jpg";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const loginFields: FieldConfig[] = [
   {
     type: "phone",
     name: "phoneNumber",
     label: "Mobile Number",
-    required: true,
+    // required: true,
     minLength: 10,
   },
   {
     type: "password",
     name: "password",
     label: "Password",
-    required: true,
+    // required: true,
     minLength: 6,
   },
 ];
@@ -27,9 +29,14 @@ const loginFields: FieldConfig[] = [
 const LoginPage: React.FC = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector((state: RootState) => state.loading.isLoading);
+  const navigate = useNavigate();
+
+  const { login } = useAuth();
 
   const handleLogin = (data: any) => {
     console.log(data);
+    navigate("/dashboard");
+    login();
 
     toast.success("Login successful!");
     // dispatch(setLoading(false));

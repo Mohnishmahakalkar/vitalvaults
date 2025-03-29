@@ -6,7 +6,7 @@
   ],
   "compilerOptions": {
     "jsx": "react-jsx",
-    "strict": true,
+    "strict": false,
     "moduleResolution": "node",
   }
 }

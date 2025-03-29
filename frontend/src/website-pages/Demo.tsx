@@ -107,7 +107,7 @@ const Demo = () => {
         <DynamicForm
           fields={fields}
           onSubmit={(data) => {console.log(data,"debug:bchdsbjcd")}}
-          layout="row"
+          layout="wrap"
           buttonsConfig={{
             showSubmit: true,
             showCancel: true,
