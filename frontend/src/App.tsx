@@ -10,6 +10,7 @@ import Loading from "./components/Loading";
 import Login from "./website-pages/Login";
 import SignUp from "./website-pages/SignUp";
 import Demo from "./website-pages/Demo";
+import Dashboard from "./authedPages/Dashboard";
 
 const router = createBrowserRouter(
   [
@@ -20,7 +21,7 @@ const router = createBrowserRouter(
         {
           path: "dashboard",
           element: <ProtectedRoute />,
-          children: [{ path: "", element: <About /> }],
+          children: [{ path: "dashboard", element: <Dashboard /> }],
         },
         { index: true, element: <Home /> },
         { path: "about", element: <About /> },

@@ -58,7 +58,7 @@ const SignupPage: React.FC = () => {
         <DynamicForm
           fields={signupFields}
           onSubmit={handleSignup}
-          layout="row"
+          layout="column"
         />
       </div>
     </PageWrapper>
