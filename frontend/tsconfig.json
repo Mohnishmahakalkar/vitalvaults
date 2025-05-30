@@ -8,5 +8,9 @@
     "jsx": "react-jsx",
     "strict": false,
     "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   }
 }
