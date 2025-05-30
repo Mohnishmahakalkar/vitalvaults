@@ -52,7 +52,6 @@ const LoginPage: React.FC = () => {
           <h2 className="text-4xl font-extrabold text-primary text-center mb-6">
             {AppName}
           </h2>
-
           <DynamicForm fields={loginFields} onSubmit={handleLogin} />
         </div>
       </div>
